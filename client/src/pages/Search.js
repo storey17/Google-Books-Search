@@ -7,7 +7,6 @@ export default function Search() {
     const [searchTerm, setSearchTerm] = useState("");
     const [booksResultsArray, setBooksResultsArray] = useState([])
 
-
     return (
         <div>
             <SearchBox
