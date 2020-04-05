@@ -17,6 +17,7 @@ export default function Search() {
 
             <Results
                 booksResultsArray={booksResultsArray}
+                isSaved = {false}
             />
         </div>
     )

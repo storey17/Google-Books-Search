@@ -7,8 +7,17 @@ export default function SearchBox(props) {
     const handleFormSubmit = () => {
         axios.get('https://www.googleapis.com/books/v1/volumes?q='+props.searchTerm)
         .then(res => {
-            props.setBooksResultsArray(res.data.items);
-            console.log(res.data.items);
+            let filteredArr = res.data.items.map(({volumeInfo}) => (
+              {
+                  title: volumeInfo.title,
+                  author: volumeInfo.authors[0],
+                  description: volumeInfo.description,
+                  image: volumeInfo.imageLinks.thumbnail,
+                  link: volumeInfo.previewLink
+            }  
+            ))
+            props.setBooksResultsArray(filteredArr);
+            console.log(filteredArr);
         })
         .catch(err => {
             console.log(err);

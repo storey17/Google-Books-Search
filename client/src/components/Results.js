@@ -6,11 +6,11 @@ export default function Results(props) {
 
    function handleFormSubmit(book) {
         let updatedBook = {
-            title: book.volumeInfo.title,
-            author:book.volumeInfo.authors[0],
-            description: book.volumeInfo.description,
-            link: book.volumeInfo.previewLink,
-            image: book.volumeInfo.imageLinks.thumbnail
+            title: book.title,
+            author:book.author,
+            description: book.description,
+            link: book.link,
+            image: book.image
         }
         axios.post('/api/books', updatedBook)
         .then(data => {
@@ -18,16 +18,24 @@ export default function Results(props) {
         });
     }
 
+    function handleDelete(_id) {
+        axios.put('/api/books/'+_id)
+        .then(data => {
+            console.log(data)
+            window.location.reload()
+        });
+    }
+
     return (
         <div>
             {props.booksResultsArray.map(book => (
-                <div className="card" style={{width: "18rem"}}>
-                    {/* <img class="card-img-top" src={book.volumeInfo.imageLinks.thumbnail} alt="book image"></img> */}
+                <div key={book.title} className="card" style={{width: "18rem"}}>
+                    {/* <img class="card-img-top" src={book.image} alt="book image"></img> */}
                     <div className="card-body">
-                        <h5 className="card-title">{book.volumeInfo.title} by {book.volumeInfo.authors[0]}</h5>
-                        <p className="card-text">{book.volumeInfo.description}</p>
-                        <a target="_blank" href={book.volumeInfo.previewLink} className="btn btn-primary">View</a>
-                        <a onClick={() => handleFormSubmit(book)} href="#" className="btn btn-primary">Save</a>
+                        <h5 className="card-title">{book.title} by {book.author}</h5>
+                        <p className="card-text">{book.description}</p>
+                        <a target="_blank" href={book.link} className="btn btn-primary">View</a>
+                        {props.isSaved ? <a onClick={() => handleDelete(book._id)} href="#" className="btn btn-primary">Delete</a> : <a onClick={() => handleFormSubmit(book)} href="#" className="btn btn-primary">Save</a> }
                     </div>
                 </div>
 

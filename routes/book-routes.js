@@ -22,6 +22,16 @@ router.post('/api/books', function (req,res) {
     });  
 });
 
+router.put('/api/books/:_id', function (req, res) {
+    console.log(req.params._id);
+    res.json(req.params._id);
+    bookModel.deleteOne({
+        _id: req.params._id
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+})
+
 
 
 
